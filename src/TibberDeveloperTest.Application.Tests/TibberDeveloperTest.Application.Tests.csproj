@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\TibberDeveloperTest.Application\TibberDeveloperTest.Application.csproj" />
+      <ProjectReference Include="..\TibberDeveloperTest.Application\TibberDeveloperTest.Application.csproj" />
     </ItemGroup>
 
 </Project>

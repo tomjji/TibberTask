@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TibberDeveloperTest.Domain.Tests", "src\TibberDeveloperTest.Domain.Tests\TibberDeveloperTest.Domain.Tests.csproj", "{DDDB6527-B9A0-4975-9E1D-CF512ED92F92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TibberDeveloperTest.Application.Tests", "TibberDeveloperTest.Application.Tests\TibberDeveloperTest.Application.Tests.csproj", "{881DAA62-27DA-4250-9219-C20DCEDAA84A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TibberDeveloperTest.Application.Tests", "src\TibberDeveloperTest.Application.Tests\TibberDeveloperTest.Application.Tests.csproj", "{F353CCCF-35C6-45A5-AE41-79B69E7C4B20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +35,7 @@ Global
 		{54E5B9E4-8479-4690-B3AA-5A66CA836B91} = {E08C2A71-301D-4374-BFCD-13C8A249E878}
 		{AE45E63A-2B80-46FF-B090-9450C8462529} = {E08C2A71-301D-4374-BFCD-13C8A249E878}
 		{DDDB6527-B9A0-4975-9E1D-CF512ED92F92} = {E08C2A71-301D-4374-BFCD-13C8A249E878}
+		{F353CCCF-35C6-45A5-AE41-79B69E7C4B20} = {E08C2A71-301D-4374-BFCD-13C8A249E878}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{58F9FA77-495C-4FA9-A7FA-6F6CC831AD28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -57,9 +58,9 @@ Global
 		{DDDB6527-B9A0-4975-9E1D-CF512ED92F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDDB6527-B9A0-4975-9E1D-CF512ED92F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDDB6527-B9A0-4975-9E1D-CF512ED92F92}.Release|Any CPU.Build.0 = Release|Any CPU
-		{881DAA62-27DA-4250-9219-C20DCEDAA84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{881DAA62-27DA-4250-9219-C20DCEDAA84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{881DAA62-27DA-4250-9219-C20DCEDAA84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{881DAA62-27DA-4250-9219-C20DCEDAA84A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F353CCCF-35C6-45A5-AE41-79B69E7C4B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F353CCCF-35C6-45A5-AE41-79B69E7C4B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F353CCCF-35C6-45A5-AE41-79B69E7C4B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F353CCCF-35C6-45A5-AE41-79B69E7C4B20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
