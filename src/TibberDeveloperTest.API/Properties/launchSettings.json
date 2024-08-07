@@ -1,0 +1,15 @@
+﻿{
+  "profiles": {
+    "TibberDeveloperTest.API": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5000",
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "POSTGRES_CONNECTION_STRING": "Host=localhost;Port=5432;Database=tibbertest;Username=admin1;Password=password2"
+      }
+    }
+  }
+}
