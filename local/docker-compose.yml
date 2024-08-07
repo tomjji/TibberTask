@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: local_postgres_tibber
+    environment:
+      POSTGRES_USER: admin1
+      POSTGRES_PASSWORD: password2
+      POSTGRES_DB: tibbertest
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist data across container restarts
+
+  api:
+    build:
+      context: ../src
+      dockerfile: TibberDeveloperTest.API/Dockerfile
+    container_name: local_api
+    ports:
+      - "5000:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      POSTGRES_CONNECTION_STRING: "Host=postgres;Port=5432;Database=tibbertest;Username=admin1;Password=password2"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+    driver: local
