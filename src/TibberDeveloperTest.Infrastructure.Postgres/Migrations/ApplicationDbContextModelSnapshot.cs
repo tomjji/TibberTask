@@ -22,7 +22,7 @@ namespace TibberDeveloperTest.Infrastructure.Postgres.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TibberDeveloperTest.Infrastructure.Postgres.Entities.Execution", b =>
+            modelBuilder.Entity("TibberDeveloperTest.Domain.Entities.Execution", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

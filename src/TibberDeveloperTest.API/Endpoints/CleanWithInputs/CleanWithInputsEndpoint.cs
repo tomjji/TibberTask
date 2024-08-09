@@ -23,7 +23,7 @@ public class CleanWithInputsEndpoint : IEndpoint
             }
             
             var result = await handler.Handle(new CleanWithInputsCommand(new StartDto(request.Start.X, request.Start.Y),
-                request.Commands.Select(x => new CommandDto((Direction)Enum.Parse(typeof(Direction), x.Direction, ignoreCase: true), x.Steps)).ToList()), cancellationToken);
+                request.Commands.Select(x => new CommandDto((Direction)Enum.Parse(typeof(Direction), x.Direction, ignoreCase: true), x.Steps)).ToArray()), cancellationToken);
             
             return Results.Ok(result); // would be good to have a mapping layer and return "ClearWithInputsResponse", since we might not want to return the whole Dto to the user f.e. the Id property
         });

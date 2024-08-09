@@ -16,7 +16,7 @@ public class CleanWithInputsCommandHandlerTests
         var executionsRepositoryMock = Substitute.For<IExecutionsRepository>();
 
         var executionId = 777;
-        var commands = new List<CommandDto>
+        var commands = new CommandDto[]
         {
             new(Direction.East, 2),
             new(Direction.North, 1),
@@ -29,8 +29,8 @@ public class CleanWithInputsCommandHandlerTests
             commands
         );
 
-        executionsRepositoryMock
-            .AddAsync(Arg.Any<Execution>(), Arg.Any<CancellationToken>())
+        executionsRepositoryMock.
+            AddAsync(Arg.Any<Execution>(), Arg.Any<CancellationToken>())
             .Returns(callInfo =>
             {
                 var execution = callInfo.Arg<Execution>();
@@ -47,7 +47,7 @@ public class CleanWithInputsCommandHandlerTests
         // Assert
         result.Should().NotBeNull();
         result.Id.Should().Be(executionId);
-        result.Commands.Should().Be(commands.Count);
+        result.Commands.Should().Be(commands.Length);
         result.Result.Should().Be(10); // initial position + 1/10 skipped
         result.DurationS.Should().BeGreaterThan(0);
     }

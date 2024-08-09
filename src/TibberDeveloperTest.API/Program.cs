@@ -6,6 +6,9 @@ using TibberDeveloperTest.Infrastructure.Postgres.Contexts;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.RegisterServices();
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
 var app = builder.Build();
 app.MapHealthChecks("/health");
 app.MapEndpoints();

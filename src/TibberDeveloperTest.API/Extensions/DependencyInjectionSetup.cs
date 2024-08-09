@@ -21,7 +21,11 @@ public static class DependencyInjectionSetup
         services.AddScoped<ICommandHandler<CleanWithInputsCommand, CleanWithInputsDto>, CleanWithInputsCommandHandler>();
         
         var connectionString = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING");
-        services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+        services.AddDbContextFactory<ApplicationDbContext>(options =>
+        {
+            options.LogTo(Console.WriteLine, LogLevel.Warning);
+            options.UseNpgsql(connectionString);
+        });
         services.AddScoped<IExecutionsRepository, ExecutionsRepository>();
     }
 }

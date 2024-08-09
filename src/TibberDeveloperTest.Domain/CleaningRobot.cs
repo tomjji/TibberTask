@@ -3,85 +3,68 @@ using TibberDeveloperTest.Domain.Exceptions;
 
 namespace TibberDeveloperTest.Domain;
 
-public class CleaningRobot(string id)
+public class CleaningRobot(string id, int gridSize) : IDisposable
 {
+    private readonly int _offset = gridSize / 2; // offset all x/y's to positive array index values
     private string Id { get; } = id;
     private State State { get; set; } = State.Unknown;
-    private int X { get; set; }
-    private int Y { get; set; }
-    
-    private readonly object _lock = new();
-    public readonly HashSet<(int, int)> UniquePositions = []; // seems to perform better than ConcurrentDictionary
-    public void Start() => State = State.Online;
-    public void Stop() => State = State.Offline;
-
-    public void SetInitialPosition(int x, int y)
-    {
-        X = x;
-        Y = y;
-        AddPosition(x, y);
-    }
-
     private void AddPosition(int x, int y)
     {
-        lock (_lock)
+        if (TouchPoint(x + _offset, y + _offset)) UniquePoints++;
+    }
+    //private readonly object _lock = new object();
+    //public ConcurrentDictionary<(int x, int y), byte> UniquePositions = [];
+    
+    public int UniquePoints { get; set; }
+
+    private ulong[] _bitArray = new ulong[(long)gridSize * gridSize / 64];
+    public void Start() => State = State.Online;
+    public void Stop()
+    {
+        State = State.Offline;
+        Dispose();
+    }
+
+    public void SetInitialPosition(int x, int y) => AddPosition(x, y);
+
+    public void Move(int startX, int startY, Direction direction, int steps)
+    {
+        if (State != State.Online)
+            throw new CleaningRobotNotOnlineException(
+                $"The cleaning robot Id = {Id} cannot move because it is not in the online state. State = {State}");
+        
+        for (var i = 0; i < steps; i++)
         {
-            UniquePositions.Add((x, y));
+            switch (direction)
+            {
+                case Direction.North: AddPosition(startX, startY + i + 1); break;
+                case Direction.South: AddPosition(startX, startY - i - 1); break;
+                case Direction.East: AddPosition(startX + i + 1, startY); break;
+                case Direction.West: AddPosition(startX - i - 1, startY); break;
+                default: throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
         }
     }
     
-    public void Move(Direction direction, int steps)
+    private long GetBitIndex(long x, long y) => y * gridSize + x;
+
+    private bool TouchPoint(int x, int y)
     {
-        if (State != State.Online) throw new CleaningRobotNotOnlineException($"The cleaning robot Id = {Id} cannot move because it is not in the online state. State = {State}");
-        
-        // Feels like it should help when there's a possibility of having so many steps within a single command
-        Parallel.For(0, steps, i =>
+        var index = GetBitIndex(x, y);
+        var bitPosition = (int)index % 64;
+        var arrayIndex = index / 64;
+        if ((_bitArray[arrayIndex] & (1UL << bitPosition)) == 0)
         {
-            int newX;
-            int newY;
-            
-            switch (direction)
-            {
-                case Direction.North:
-                    newX = X;
-                    newY = Y + i + 1;
-                    break;
-                case Direction.South:
-                    newX = X;
-                    newY = Y - i - 1;
-                    break;
-                case Direction.East:
-                    newX = X + i + 1;
-                    newY = Y;
-                    break;
-                case Direction.West:
-                    newX = X - i - 1;
-                    newY = Y;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-            }
-            
-            AddPosition(newX, newY);
-        });
-        
-        // Set Final position
-        switch (direction)
-        {
-            case Direction.North:
-                Y += steps;
-                break;
-            case Direction.South:
-                Y -= steps;
-                break;
-            case Direction.East:
-                X += steps;
-                break;
-            case Direction.West:
-                X -= steps;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            _bitArray[arrayIndex] |= (1UL << bitPosition);
+            return true;
         }
+        return false;
+    }
+
+    public void Dispose()
+    {
+        _bitArray = null!;
+        UniquePoints = 0;
+        GC.Collect();
     }
 }

@@ -6,11 +6,11 @@ namespace TibberDeveloperTest.Domain.Tests;
 public class CleaningRobotTests
 {
     [Fact]
-    public void CleaningRobot_ShouldRecordAllUniquePositionsTouched_AfterSequenceOfCommands()
+    public Task CleaningRobot_ShouldRecordAllUniquePositionsTouched_AfterSequenceOfCommands()
     {
         // Arrange
-        var cleaningRobot = new CleaningRobot("test");
-        
+        var cleaningRobot = new CleaningRobot("test", 200000);
+
         var expectedPositions = new HashSet<(int, int)>
         {
             (10, 10), // Starting position
@@ -32,16 +32,16 @@ public class CleaningRobotTests
         // Act
         cleaningRobot.Start();
         cleaningRobot.SetInitialPosition(10, 10);
-        cleaningRobot.Move(Direction.West, 2);
-        cleaningRobot.Move(Direction.North, 5);
-        cleaningRobot.Move(Direction.South, 1);
-        cleaningRobot.Move(Direction.East, 1);
-        cleaningRobot.Move(Direction.South, 3);
-        cleaningRobot.Move(Direction.North, 1);
+        cleaningRobot.Move(10, 10, Direction.West, 2);
+        cleaningRobot.Move(8, 10, Direction.North, 5);
+        cleaningRobot.Move(8, 15, Direction.South, 1);
+        cleaningRobot.Move(8,14, Direction.East, 1);
+        cleaningRobot.Move(9, 14, Direction.South, 3);
+        cleaningRobot.Move(9, 11, Direction.North, 1);
         cleaningRobot.Stop();
         
         // Assert
-        cleaningRobot.UniquePositions.Count.Should().Be(expectedPositions.Count);
-        cleaningRobot.UniquePositions.Should().BeEquivalentTo(expectedPositions);
+        cleaningRobot.UniquePoints.Should().Be(expectedPositions.Count);
+        return Task.CompletedTask;
     }
 }
