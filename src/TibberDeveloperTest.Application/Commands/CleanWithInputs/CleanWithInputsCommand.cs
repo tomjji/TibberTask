@@ -36,14 +36,14 @@ public sealed class CleanWithInputsCommandHandler(IExecutionsRepository executio
         }
         stopwatch.Stop();
         ///////
-        cleaningRobot.Stop();
-
         var execution = await executionsRepository.AddAsync(new Execution
         {
             Commands = commandsCount,
             Result = cleaningRobot.UniquePoints,
             DurationS = (decimal)stopwatch.Elapsed.TotalSeconds
         }, cancellationToken);
+        
+        cleaningRobot.Stop();
         
         return new CleanWithInputsDto(execution.Id, execution.Timestamp, commandsCount, execution.Result, execution.DurationS);
     }

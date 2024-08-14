@@ -38,10 +38,11 @@ public class CleaningRobotTests
         cleaningRobot.Move(8,14, Direction.East, 1);
         cleaningRobot.Move(9, 14, Direction.South, 3);
         cleaningRobot.Move(9, 11, Direction.North, 1);
-        cleaningRobot.Stop();
         
         // Assert
         cleaningRobot.UniquePoints.Should().Be(expectedPositions.Count);
+        
+        cleaningRobot.Stop();
         return Task.CompletedTask;
     }
 }
