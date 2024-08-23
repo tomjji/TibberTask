@@ -51,8 +51,9 @@ public class CleaningRobot(string id, int gridSize) : IDisposable
     private bool TouchPoint(int x, int y)
     {
         var index = GetBitIndex(x, y);
-        var bitPosition = (int)index % 64;
+        var bitPosition = (int)(index % 64);
         var arrayIndex = index / 64;
+        
         if ((_bitArray[arrayIndex] & (1UL << bitPosition)) == 0)
         {
             _bitArray[arrayIndex] |= (1UL << bitPosition);
